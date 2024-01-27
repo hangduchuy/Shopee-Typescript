@@ -27,6 +27,8 @@ export default function RatingStars({ queryConfig }: Props) {
             <div
               className='flex items-center text-sm cursor-pointer'
               onClick={() => handleFilterStar(5 - index)}
+              aria-hidden='true'
+              role='button'
               tabIndex={0}
             >
               {Array(5)

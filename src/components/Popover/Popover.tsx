@@ -1,4 +1,4 @@
-import { FloatingPortal, Placement, arrow, offset, shift, useFloating } from '@floating-ui/react'
+import { FloatingPortal, type Placement, arrow, offset, shift, useFloating } from '@floating-ui/react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ElementType, useId, useRef, useState } from 'react'
 
