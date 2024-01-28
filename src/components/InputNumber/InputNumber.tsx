@@ -18,7 +18,7 @@ const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(function Inpu
   },
   ref
 ) {
-  const [localValue, setLocalValue] = useState<string>(value)
+  const [localValue, setLocalValue] = useState<string>(value as string)
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target
