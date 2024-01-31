@@ -1,44 +1,20 @@
-import { Link, createSearchParams, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Popover from '../Popover'
-import { useMutation, useQuery } from '@tanstack/react-query'
-import authApi from 'src/apis/auth.api'
+import { useQuery } from '@tanstack/react-query'
 import { useContext } from 'react'
 import { AppContext } from 'src/contexts/app.context'
 import path from 'src/constants/path'
-import useQueryConfig from 'src/hooks/useQueryConfig'
-import { useForm } from 'react-hook-form'
-import { Schema, schema } from 'src/utils/rules'
-import { yupResolver } from '@hookform/resolvers/yup'
-import { omit } from 'lodash'
 import { purchasesStatus } from 'src/constants/purchase'
 import purchaseApi from 'src/apis/purchase.api'
 import noproduct from 'src/assets/images/no-product.png'
 import { formatCurrency } from 'src/utils/utils'
-import { queryClient } from 'src/main'
+import NavHeader from '../NavHeader'
+import useSearchProducts from 'src/hooks/useSearchProducts'
 
-type FormData = Pick<Schema, 'name'>
-
-const nameSchema = schema.pick(['name'])
 const MAX_PURCHASES = 5
 export default function Header() {
-  const queryConfig = useQueryConfig()
-  const navigate = useNavigate()
-  const { register, handleSubmit } = useForm<FormData>({
-    defaultValues: {
-      name: ''
-    },
-    resolver: yupResolver(nameSchema)
-  })
-  const { setIsAuthenticated, isAuthenticated, setProfile, profile } = useContext(AppContext)
-  const logoutMutation = useMutation({
-    mutationFn: authApi.logout,
-    onSuccess: () => {
-      setIsAuthenticated(false)
-      setProfile(null)
-      queryClient.removeQueries({ queryKey: ['purchases', { status: purchasesStatus.inCart }] })
-    }
-  })
-
+  const { isAuthenticated } = useContext(AppContext)
+  const { onSubmitSearch, register } = useSearchProducts()
   // khi chúng ta chuyển trang thì header chỉ bị re-render
   const { data: purchaseInCartData } = useQuery({
     queryKey: ['purchases', { status: purchasesStatus.inCart }],
@@ -48,121 +24,10 @@ export default function Header() {
 
   const purchaseInCart = purchaseInCartData?.data.data
 
-  const handleLogout = () => {
-    logoutMutation.mutate()
-  }
-
-  const onSubmitSearch = handleSubmit((data) => {
-    const config = queryConfig.order
-      ? omit(
-          {
-            ...queryConfig,
-            name: data.name
-          },
-          ['order', 'sort_by']
-        )
-      : {
-          ...queryConfig,
-          name: data.name
-        }
-    navigate({
-      pathname: path.home,
-      search: createSearchParams(config).toString()
-    })
-  })
-
   return (
     <div className='pb-5 pt-2 bg-[linear-gradient(-180deg,#f53d2d,#f63)] text-white'>
       <div className='container'>
-        <div className='flex justify-end'>
-          <Popover
-            className='flex items-center py-1 hover:text-white/70 cursor-pointer'
-            renderPopover={
-              <div className='bg-white relative shadow-md rounded-sm border border-gray-300'>
-                <div className='flex flex-col py-2 pr-28 pl-3 '>
-                  <button className='py-2 px-3 hover:text-orange text-left'>Tiếng Việt</button>
-                  <button className='py-2 px-3 hover:text-orange mt-2 text-left'>English</button>
-                </div>
-              </div>
-            }
-          >
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              fill='none'
-              viewBox='0 0 24 24'
-              strokeWidth={1.5}
-              stroke='currentColor'
-              className='w-5 h-5'
-            >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                d='M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418'
-              />
-            </svg>
-            <span className='mx-1'>Tiếng Việt</span>
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              fill='none'
-              viewBox='0 0 24 24'
-              strokeWidth={1.5}
-              stroke='currentColor'
-              className='w-5 h-5'
-            >
-              <path strokeLinecap='round' strokeLinejoin='round' d='m19.5 8.25-7.5 7.5-7.5-7.5' />
-            </svg>
-          </Popover>
-          {isAuthenticated && (
-            <Popover
-              className='flex items-center py-1 hover:text-white/70 cursor-pointer ml-6'
-              renderPopover={
-                <div className='bg-white relative shadow-md rounded-sm border border-gray-300'>
-                  <Link
-                    to={path.profile}
-                    className='block py-2 px-3 hover:bg-slate-100 bg-white
-              hover:text-cyan-500 w-full text-left'
-                  >
-                    Tài khoản của tôi
-                  </Link>
-                  <Link
-                    to={'/'}
-                    className='block py-2 px-3 hover:bg-slate-100 bg-white
-              hover:text-cyan-500 w-full text-left'
-                  >
-                    Đơn mua
-                  </Link>
-                  <button
-                    className='block py-2 px-3 hover:bg-slate-100 bg-white
-              hover:text-cyan-500 w-full text-left'
-                    onClick={handleLogout}
-                  >
-                    Đăng xuất
-                  </button>
-                </div>
-              }
-            >
-              <div className='w-6 h-6 mr-2 flex-shrink-0'>
-                <img
-                  src='https://down-vn.img.susercontent.com/file/ccba92eede1246e67c695b7971c8ed27_tn'
-                  alt='avatar'
-                  className='w-full h-full object-cover rounded-full'
-                />
-              </div>
-              <div>{profile?.email}</div>
-            </Popover>
-          )}
-          {!isAuthenticated && (
-            <div className='flex items-center'>
-              <Link to={path.register} className='mx-3 capitalize hover:text-white/70'>
-                Đăng ký
-              </Link>
-              <div className='border-r-[1px] border-r-white/40 h-4'></div>
-              <Link to={path.login} className='mx-3 capitalize hover:text-white/70'>
-                Đăng nhập
-              </Link>
-            </div>
-          )}
-        </div>
+        <NavHeader />
         <div className='grid grid-cols-12 gap-4 mt-4 items-end'>
           <Link to={`/`} className='col-span-2'>
             <svg viewBox='0 0 192 65' className='h-11 w-full fill-white'>
@@ -201,7 +66,7 @@ export default function Header() {
             <Popover
               renderPopover={
                 <div className='bg-white relative shadow-md rounded-sm border border-gray-200 max-w-[400px] text-sm'>
-                  {purchaseInCart ? (
+                  {purchaseInCart && purchaseInCart.length > 0 ? (
                     <div className='p-2'>
                       <div className='text-gray-400 capitalize'>Sản phẩm mới thêm</div>
                       <div className='mt-5'>
@@ -260,7 +125,7 @@ export default function Header() {
                     d='M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z'
                   />
                 </svg>
-                {purchaseInCart && (
+                {purchaseInCart && purchaseInCart.length > 0 && (
                   <span className='absolute top-[-5px] left-[17px] rounded-full bg-white px-[9px] py-[1px] text-orange text-xs'>
                     {purchaseInCart?.length}
                   </span>
