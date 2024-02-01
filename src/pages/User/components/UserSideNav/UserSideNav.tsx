@@ -63,11 +63,11 @@ export default function UserSideNav() {
           }
         >
           <div className='mr-3 h-[22px] w-[22px]'>
-            <img
+            {/* <img
               src='https://down-vn.img.susercontent.com/file/ba61750a46794d8847c3f463c5e71cc4'
               alt=''
               className='h-full w-full'
-            />
+            /> */}
           </div>
           Đổi mật khẩu
         </NavLink>
