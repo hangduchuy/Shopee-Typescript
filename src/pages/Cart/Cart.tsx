@@ -9,7 +9,7 @@ import { purchasesStatus } from 'src/constants/purchase'
 import { Purchase } from 'src/types/purchase.type'
 import { formatCurrency, generateNameId } from 'src/utils/utils'
 import { produce } from 'immer'
-import { keyBy } from 'lodash'
+import keyBy from 'lodash/keyBy'
 import { toast } from 'react-toastify'
 import { AppContext } from 'src/contexts/app.context'
 import noproduct from 'src/assets/images/no-product.png'
@@ -150,7 +150,7 @@ export default function Cart() {
           <Fragment>
             <div className='overflow-auto'>
               <div className='min-w-[1000px]'>
-                <div className='grid grid-cols-12 rounded-sm bg-white py-5 px-9 text-sm capitalize text-gray-500 shadow'>
+                <div className='grid grid-cols-12 rounded-sm bg-white px-9 py-5 text-sm capitalize text-gray-500 shadow'>
                   <div className='col-span-6'>
                     <div className='flex items-center'>
                       <div className='flex flex-shrink-0 items-center justify-center pr-3'>
@@ -177,7 +177,7 @@ export default function Cart() {
                   <div className='my-3 rounded-sm bg-white p-5 shadow'>
                     {extendedPurchases.map((purchase, index) => (
                       <div
-                        className='grid grid-cols-12 items-center text-center rounded-sm border border-gray-200 mb-5 first:mt-0 py-5 px-4 text-sm text-gray-500'
+                        className='mb-5 grid grid-cols-12 items-center rounded-sm border border-gray-200 px-4 py-5 text-center text-sm text-gray-500 first:mt-0'
                         key={purchase._id}
                       >
                         <div className='col-span-6'>
@@ -198,7 +198,7 @@ export default function Cart() {
                                 >
                                   <img src={purchase.product.image} alt={purchase.product.name} />
                                 </Link>
-                                <div className='flex-grow px-2 pt-1 pb-2'>
+                                <div className='flex-grow px-2 pb-2 pt-1'>
                                   <Link
                                     to={`${path.home}${generateNameId({ name: purchase.product.name, id: purchase.product._id })}`}
                                     className='line-clamp-2 text-left'
@@ -261,7 +261,7 @@ export default function Cart() {
                 )}
               </div>
             </div>
-            <div className='sticky bottom-0 z-10 mt-8 flex flex-col sm:flex-row sm:items-center rounded-sm bg-white p-5 shadow border border-gray-100'>
+            <div className='sticky bottom-0 z-10 mt-8 flex flex-col rounded-sm border border-gray-100 bg-white p-5 shadow sm:flex-row sm:items-center'>
               <div className='flex items-center'>
                 <div className='flex flex-shrink-0 items-center justify-center pr-3'>
                   <input
@@ -271,20 +271,20 @@ export default function Cart() {
                     onChange={handleCheckAll}
                   />
                 </div>
-                <button className='bg-none mx-3 border-none' onClick={handleCheckAll}>
+                <button className='mx-3 border-none bg-none' onClick={handleCheckAll}>
                   Chọn tất cả ({extendedPurchases.length})
                 </button>
-                <button onClick={handleDeleteManyPurchases} className='bg-none mx-3 border-none'>
+                <button onClick={handleDeleteManyPurchases} className='mx-3 border-none bg-none'>
                   Xoá
                 </button>
               </div>
-              <div className='sm:ml-auto mt-5 sm:mt-0 flex flex-col sm:flex-row sm:items-center'>
+              <div className='mt-5 flex flex-col sm:ml-auto sm:mt-0 sm:flex-row sm:items-center'>
                 <div className=''>
                   <div className='flex items-center sm:justify-end'>
                     <div className=''>Tổng thanh toán ({checkedPurchasesCount} sản phẩm):</div>
                     <div className='ml-2 text-2xl text-orange'>₫{formatCurrency(totalCheckedPurchasePrice)}</div>
                   </div>
-                  <div className='flex items-center sm:justify-end text-sm'>
+                  <div className='flex items-center text-sm sm:justify-end'>
                     <div className='text-gray-500'>Tiết kiệm</div>
                     <div className='ml-6 text-orange'>₫{formatCurrency(totalCheckedPurchaseSavingPrice)}</div>
                   </div>
@@ -292,7 +292,7 @@ export default function Cart() {
                 <Button
                   onClick={handleBuyPurchases}
                   disabled={buyPurchaseMutation.isPending}
-                  className='sm:ml-4 mt-5 sm:mt-0 h-10 w-52 text-center uppercase bg-red-500 text-white text-sm hover:bg-red-600 flex justify-center items-center'
+                  className='mt-5 flex h-10 w-52 items-center justify-center bg-red-500 text-center text-sm uppercase text-white hover:bg-red-600 sm:ml-4 sm:mt-0'
                 >
                   Mua hàng
                 </Button>
@@ -302,12 +302,12 @@ export default function Cart() {
         ) : (
           <Fragment>
             <div className='text-center'>
-              <img src={noproduct} alt='no purchase' className='h-24 w-24 mx-auto' />
-              <div className='mt-5 text-gray-400 font-bold'>Giỏ hàng của bạn còn trống</div>
+              <img src={noproduct} alt='no purchase' className='mx-auto h-24 w-24' />
+              <div className='mt-5 font-bold text-gray-400'>Giỏ hàng của bạn còn trống</div>
               <div className='mt-5 text-center'>
                 <Link
                   to={path.home}
-                  className='rounded-sm mt-5 bg-orange hover:bg-orange/80 transition-all px-10 py-2 uppercase text-white'
+                  className='mt-5 rounded-sm bg-orange px-10 py-2 uppercase text-white transition-all hover:bg-orange/80'
                 >
                   Mua ngay
                 </Link>

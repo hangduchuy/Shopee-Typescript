@@ -1,4 +1,4 @@
-import { range } from 'lodash'
+import range from 'lodash/range'
 import { useEffect, useState } from 'react'
 
 interface Props {
@@ -37,15 +37,15 @@ export default function DateSelect({ onChange, value, errorMessage }: Props) {
   }
 
   return (
-    <div className='mt-2 flex flex-wrap flex-col sm:flex-row'>
-      <div className='sm:w-[20%] truncate pt-3 sm:text-right capitalize'>Ngày sinh</div>
+    <div className='mt-2 flex flex-col flex-wrap sm:flex-row'>
+      <div className='truncate pt-3 capitalize sm:w-[20%] sm:text-right'>Ngày sinh</div>
       <div className='sm:w-[80%] sm:pl-5'>
         <div className='flex justify-between'>
           <select
             onChange={handleChange}
             name='date'
             value={value?.getDate() || date.date}
-            className='h-10 w-[32%] rounded-sm border border-black/10 px-3 hover:border-orange cursor-pointer'
+            className='h-10 w-[32%] cursor-pointer rounded-sm border border-black/10 px-3 hover:border-orange'
           >
             <option value={''} disabled hidden>
               Ngày
@@ -60,7 +60,7 @@ export default function DateSelect({ onChange, value, errorMessage }: Props) {
             onChange={handleChange}
             name='month'
             value={value?.getMonth() || date.month}
-            className='h-10 w-[32%] rounded-sm border border-black/10 px-3 hover:border-orange cursor-pointer'
+            className='h-10 w-[32%] cursor-pointer rounded-sm border border-black/10 px-3 hover:border-orange'
           >
             <option value={''} disabled hidden>
               Tháng
@@ -75,7 +75,7 @@ export default function DateSelect({ onChange, value, errorMessage }: Props) {
             onChange={handleChange}
             name='year'
             value={value?.getFullYear() || date.year}
-            className='h-10 w-[32%] rounded-sm border border-black/10 px-3 hover:border-orange cursor-pointer'
+            className='h-10 w-[32%] cursor-pointer rounded-sm border border-black/10 px-3 hover:border-orange'
           >
             <option value={''} disabled hidden>
               Năm
@@ -87,7 +87,7 @@ export default function DateSelect({ onChange, value, errorMessage }: Props) {
             ))}
           </select>
         </div>
-        <div className='mt-1 text-sm text-red-600 min-h-[1.25rem]'>{errorMessage}</div>
+        <div className='mt-1 min-h-[1.25rem] text-sm text-red-600'>{errorMessage}</div>
       </div>
     </div>
   )
