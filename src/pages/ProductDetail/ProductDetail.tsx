@@ -12,8 +12,10 @@ import purchaseApi from 'src/apis/purchase.api'
 import { purchasesStatus } from 'src/constants/purchase'
 import { toast } from 'react-toastify'
 import path from 'src/constants/path'
+import { useTranslation } from 'react-i18next'
 
 export default function ProductDetail() {
+  const { t } = useTranslation(['product'])
   const [buyCount, setBuyCount] = useState(1)
   const { nameId } = useParams()
   const id = getIdFromNameId(nameId as string)
@@ -126,20 +128,20 @@ export default function ProductDetail() {
           <div className='grid grid-cols-12 gap-9'>
             <div className='col-span-5'>
               <div
-                className='relative overflow-hidden pt-[100%] w-full shadow cursor-zoom-in'
+                className='relative w-full cursor-zoom-in overflow-hidden pt-[100%] shadow'
                 onMouseMove={handleZoom}
                 onMouseLeave={handleRemoveZoom}
               >
                 <img
                   src={activeImage}
                   alt={product.name}
-                  className='absolute pointer-events-none top-0 left-0 bg-white w-full h-full object-cover'
+                  className='pointer-events-none absolute left-0 top-0 h-full w-full bg-white object-cover'
                   ref={imageRef}
                 />
               </div>
               <div className='relative mt-4 grid grid-cols-5 gap-1'>
                 <button
-                  className='absolute left-0 top-1/2 z-10 h-9 w-5 -translate-y-1/2 bg-black/20 text-whiteS'
+                  className='text-whiteS absolute left-0 top-1/2 z-10 h-9 w-5 -translate-y-1/2 bg-black/20'
                   onClick={prev}
                 >
                   <svg
@@ -148,7 +150,7 @@ export default function ProductDetail() {
                     viewBox='0 0 24 24'
                     strokeWidth={1.5}
                     stroke='currentColor'
-                    className='w-5 h-5'
+                    className='h-5 w-5'
                   >
                     <path strokeLinecap='round' strokeLinejoin='round' d='M15.75 19.5 8.25 12l7.5-7.5' />
                   </svg>
@@ -160,14 +162,14 @@ export default function ProductDetail() {
                       <img
                         src={img}
                         alt={product.name}
-                        className='absolute top-0 left-0 bg-white w-full h-full object-cover cursor-pointer'
+                        className='absolute left-0 top-0 h-full w-full cursor-pointer bg-white object-cover'
                       />
                       {isActive && <div className='absolute inset-0 border-2 border-orange' />}
                     </div>
                   )
                 })}
                 <button
-                  className='absolute right-0 top-1/2 z-10 h-9 w-5 -translate-y-1/2 bg-black/20 text-whiteS'
+                  className='text-whiteS absolute right-0 top-1/2 z-10 h-9 w-5 -translate-y-1/2 bg-black/20'
                   onClick={next}
                 >
                   <svg
@@ -176,7 +178,7 @@ export default function ProductDetail() {
                     viewBox='0 0 24 24'
                     strokeWidth={1.5}
                     stroke='currentColor'
-                    className='w-5 h-5'
+                    className='h-5 w-5'
                   >
                     <path strokeLinecap='round' strokeLinejoin='round' d='m8.25 4.5 7.5 7.5-7.5 7.5' />
                   </svg>
@@ -216,7 +218,9 @@ export default function ProductDetail() {
                   value={buyCount}
                   max={product.quantity}
                 />
-                <div className='ml-6 text-sm text-gray-500'>{product.quantity} sản phẩm có sẵn</div>
+                <div className='ml-6 text-sm text-gray-500'>
+                  {product.quantity} {t('available')}
+                </div>
               </div>
               <div className='mt-8 flex items-center'>
                 <button
@@ -229,7 +233,7 @@ export default function ProductDetail() {
                     viewBox='0 0 24 24'
                     strokeWidth={1.5}
                     stroke='currentColor'
-                    className='mr-[10px] h-5 ư-5 fill-current stroke-orange text-orange'
+                    className='ư-5 mr-[10px] h-5 fill-current stroke-orange text-orange'
                   >
                     <path
                       strokeLinecap='round'
@@ -254,7 +258,7 @@ export default function ProductDetail() {
         <div className='container'>
           <div className='mt-8 bg-white p-4 shadow'>
             <div className='rounded bg-gray-50 p-4 text-lg capitalize text-slate-700'>Mô tả sản phẩm</div>
-            <div className='mx-4 mt-12 mb-4 text-sm leading-loose'>
+            <div className='mx-4 mb-4 mt-12 text-sm leading-loose'>
               <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(product.description) }} />
             </div>
           </div>
@@ -264,7 +268,7 @@ export default function ProductDetail() {
         <div className='container'>
           <div className='uppercase text-gray-400'>có thể bạn cũng thích</div>
           {productsData && (
-            <div className='mt-6 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3'>
+            <div className='mt-6 grid grid-cols-2 gap-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6'>
               {productsData.data.data.products.map((product) => (
                 <div className='cols-span-1' key={product._id}>
                   <Product product={product} />
