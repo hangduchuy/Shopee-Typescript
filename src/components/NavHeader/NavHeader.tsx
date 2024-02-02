@@ -27,12 +27,12 @@ export default function NavHeader() {
   return (
     <div className='flex justify-end'>
       <Popover
-        className='flex items-center py-1 hover:text-white/70 cursor-pointer'
+        className='flex cursor-pointer items-center py-1 hover:text-white/70'
         renderPopover={
-          <div className='bg-white relative shadow-md rounded-sm border border-gray-300'>
-            <div className='flex flex-col py-2 pr-28 pl-3 '>
-              <button className='py-2 px-3 hover:text-orange text-left'>Tiếng Việt</button>
-              <button className='py-2 px-3 hover:text-orange mt-2 text-left'>English</button>
+          <div className='relative rounded-sm border border-gray-300 bg-white shadow-md'>
+            <div className='flex flex-col py-2 pl-3 pr-28 '>
+              <button className='px-3 py-2 text-left hover:text-orange'>Tiếng Việt</button>
+              <button className='mt-2 px-3 py-2 text-left hover:text-orange'>English</button>
             </div>
           </div>
         }
@@ -43,7 +43,7 @@ export default function NavHeader() {
           viewBox='0 0 24 24'
           strokeWidth={1.5}
           stroke='currentColor'
-          className='w-5 h-5'
+          className='h-5 w-5'
         >
           <path
             strokeLinecap='round'
@@ -58,33 +58,33 @@ export default function NavHeader() {
           viewBox='0 0 24 24'
           strokeWidth={1.5}
           stroke='currentColor'
-          className='w-5 h-5'
+          className='h-5 w-5'
         >
           <path strokeLinecap='round' strokeLinejoin='round' d='m19.5 8.25-7.5 7.5-7.5-7.5' />
         </svg>
       </Popover>
       {isAuthenticated && (
         <Popover
-          className='flex items-center py-1 hover:text-white/70 cursor-pointer ml-6'
+          className='ml-6 flex cursor-pointer items-center py-1 hover:text-white/70'
           renderPopover={
-            <div className='bg-white relative shadow-md rounded-sm border border-gray-300'>
+            <div className='relative rounded-sm border border-gray-300 bg-white shadow-md'>
               <Link
                 to={path.profile}
-                className='block py-2 px-3 hover:bg-slate-100 bg-white
-      hover:text-cyan-500 w-full text-left'
+                className='block w-full bg-white px-3 py-2
+      text-left hover:bg-slate-100 hover:text-cyan-500'
               >
                 Tài khoản của tôi
               </Link>
               <Link
-                to={'/'}
-                className='block py-2 px-3 hover:bg-slate-100 bg-white
-      hover:text-cyan-500 w-full text-left'
+                to={path.historyPurchase}
+                className='block w-full bg-white px-3 py-2
+      text-left hover:bg-slate-100 hover:text-cyan-500'
               >
                 Đơn mua
               </Link>
               <button
-                className='block py-2 px-3 hover:bg-slate-100 bg-white
-      hover:text-cyan-500 w-full text-left'
+                className='block w-full bg-white px-3 py-2
+      text-left hover:bg-slate-100 hover:text-cyan-500'
                 onClick={handleLogout}
               >
                 Đăng xuất
@@ -92,8 +92,8 @@ export default function NavHeader() {
             </div>
           }
         >
-          <div className='w-6 h-6 mr-2 flex-shrink-0'>
-            <img src={getAvatarUrl(profile?.avatar)} alt='avatar' className='w-full h-full object-cover rounded-full' />
+          <div className='mr-2 h-6 w-6 flex-shrink-0'>
+            <img src={getAvatarUrl(profile?.avatar)} alt='avatar' className='h-full w-full rounded-full object-cover' />
           </div>
           <div>{profile?.email}</div>
         </Popover>
@@ -103,7 +103,7 @@ export default function NavHeader() {
           <Link to={path.register} className='mx-3 capitalize hover:text-white/70'>
             Đăng ký
           </Link>
-          <div className='border-r-[1px] border-r-white/40 h-4'></div>
+          <div className='h-4 border-r-[1px] border-r-white/40'></div>
           <Link to={path.login} className='mx-3 capitalize hover:text-white/70'>
             Đăng nhập
           </Link>

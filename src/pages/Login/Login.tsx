@@ -56,9 +56,9 @@ export default function Login() {
   return (
     <div className='bg-orange'>
       <div className='container'>
-        <div className='grid grid-cols-1 lg:grid-cols-5 py-12 lg:py-32 lg:pr-10'>
+        <div className='grid grid-cols-1 py-12 lg:grid-cols-5 lg:py-32 lg:pr-10'>
           <div className='lg:col-span-2 lg:col-start-4'>
-            <form className='p-10 rounded bg-white shadow-sm' onSubmit={onSubmit} noValidate>
+            <form className='rounded bg-white p-10 shadow-sm' onSubmit={onSubmit} noValidate>
               <div className='text-2xl'>Đăng Nhập</div>
               <Input
                 name='email'
@@ -73,6 +73,7 @@ export default function Login() {
                 register={register}
                 type='password'
                 className='mt-2'
+                classNameEye='absolute right-[5px] cursor-pointer w-5 h-5 top-[12px]'
                 errorMessage={errors.password?.message}
                 placeholder='Password'
                 autoComplete='on'
@@ -80,16 +81,16 @@ export default function Login() {
               <div className='mt-3'>
                 <Button
                   type='submit'
-                  className='w-full text-center py-4 px-2 uppercase bg-red-500 text-white text-sm hover:bg-red-600 flex justify-center items-center'
+                  className='flex w-full items-center justify-center bg-red-500 px-2 py-4 text-center text-sm uppercase text-white hover:bg-red-600'
                   isloading={loginMutation.isPending}
                   disabled={loginMutation.isPending}
                 >
                   Đăng nhập
                 </Button>
               </div>
-              <div className='flex items-center justify-center mt-8'>
+              <div className='mt-8 flex items-center justify-center'>
                 <span className='text-gray-300'>Bạn chưa có tài khoản? </span>
-                <Link to={'/register'} className='text-red-400 ml-1'>
+                <Link to={'/register'} className='ml-1 text-red-400'>
                   Đăng ký
                 </Link>
               </div>
