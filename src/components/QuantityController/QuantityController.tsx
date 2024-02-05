@@ -67,7 +67,7 @@ export default function QuantityController({
           viewBox='0 0 24 24'
           strokeWidth={1.5}
           stroke='currentColor'
-          className='w-4 h-4'
+          className='h-4 w-4'
         >
           <path strokeLinecap='round' strokeLinejoin='round' d='M5 12h14' />
         </svg>
@@ -91,7 +91,7 @@ export default function QuantityController({
           viewBox='0 0 24 24'
           strokeWidth={1.5}
           stroke='currentColor'
-          className='w-4 h-4'
+          className='h-4 w-4'
         >
           <path strokeLinecap='round' strokeLinejoin='round' d='M12 4.5v15m7.5-7.5h-15' />
         </svg>

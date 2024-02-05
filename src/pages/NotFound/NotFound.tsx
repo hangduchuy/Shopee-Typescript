@@ -260,12 +260,12 @@ export default function NotFound() {
                 </defs>
               </svg>
             </div>
-            <p className='text-sm md:text-base text-slate-400 p-2 mb-4'>
+            <p className='mb-4 p-2 text-sm text-slate-400 md:text-base'>
               The stuff you were looking for doesn&apos;t exist
             </p>
             <Link
               to='/'
-              className='bg-transparent hover:bg-orange/80 text-orange hover:text-white rounded shadow hover:shadow-lg py-2 px-4 border border-orange bg-orange hover:border-transparent'
+              className='rounded border border-orange bg-orange bg-transparent px-4 py-2 text-orange shadow hover:border-transparent hover:bg-orange/80 hover:text-white hover:shadow-lg'
             >
               Retry
             </Link>

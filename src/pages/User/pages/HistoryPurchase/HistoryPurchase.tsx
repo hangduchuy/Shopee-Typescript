@@ -37,7 +37,7 @@ export default function HistoryPurchase() {
           status: String(tab.status)
         }).toString()
       }}
-      className={classNames('flex flex-1 items-center justify-center text-center border-b-2 bg-white py-4', {
+      className={classNames('flex flex-1 items-center justify-center border-b-2 bg-white py-4 text-center', {
         'border-b-orange text-orange': status === tab.status,
         'border-b-black/10 text-gray-900': status !== tab.status
       })}
@@ -69,7 +69,7 @@ export default function HistoryPurchase() {
                     <span className='truncate text-gray-500 line-through'>
                       ₫{formatCurrency(purchase.product.price_before_discount)}
                     </span>
-                    <span className='truncate text-orange ml-2'>₫{formatCurrency(purchase.product.price)}</span>
+                    <span className='ml-2 truncate text-orange'>₫{formatCurrency(purchase.product.price)}</span>
                   </div>
                 </Link>
                 <div className='flex justify-end'>
