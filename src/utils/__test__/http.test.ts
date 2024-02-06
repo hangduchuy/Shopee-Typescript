@@ -2,12 +2,7 @@ import { describe, it, expect, beforeEach } from 'vitest'
 import { Http } from '../http'
 import HttpStatusCode from 'src/constants/httpStatusCode.enum'
 import { setAccessTokenToLS, setRefreshTokenToLS } from '../auth'
-
-const access_token_1s =
-  'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmZjMzlhNWZkYzVmMDM3ZTZmNjhkYSIsImVtYWlsIjoiZEBnbWFpbC5jb20iLCJyb2xlcyI6WyJVc2VyIl0sImNyZWF0ZWRfYXQiOiIyMDI0LTAyLTA0VDA4OjQxOjEwLjM0NFoiLCJpYXQiOjE3MDcwMzYwNzAsImV4cCI6MTcwNzAzNjA3MX0.OhbzeGNs1Hv5yw1HDQDCAM8jLhQ-RSwBYWAofhrvhsw'
-
-const refresh_token_1000days =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmZjMzlhNWZkYzVmMDM3ZTZmNjhkYSIsImVtYWlsIjoiZEBnbWFpbC5jb20iLCJyb2xlcyI6WyJVc2VyIl0sImNyZWF0ZWRfYXQiOiIyMDI0LTAyLTA0VDA4OjQxOjEwLjM0NFoiLCJpYXQiOjE3MDcwMzYwNzAsImV4cCI6MTcxNzAzNjA3MH0.Q57FpQlGgqOKVFcd7hcMWv-uFRevdNMEGAxkLLq3Uf8'
+import { access_token_1s, refresh_token_1000days } from 'src/msw/auth.msw.js'
 
 describe('http axios', () => {
   let http = new Http().instance

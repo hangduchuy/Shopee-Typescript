@@ -1,3 +1,4 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { render, screen, waitFor, type waitForOptions } from '@testing-library/react'
 // eslint-disable-next-line import/no-named-as-default
 import userEvent from '@testing-library/user-event'
@@ -29,10 +30,47 @@ export const logScreen = async (
   screen.debug(body, 99999999)
 }
 
+// export const renderWithRouter = ({ route = '/' } = {}) => {
+//   window.history.pushState({}, 'Test page', route)
+//   return {
+//     user: userEvent.setup(),
+//     ...render(<App />, { wrapper: BrowserRouter })
+//   }
+// }
+
+const createWrapper = () => {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false
+      },
+      mutations: {
+        retry: false
+      }
+    }
+  })
+  // queryClient.setlogger({
+  //   log: console.log,
+  //   warn: console.warn,
+  //   error: () => null
+  // })
+  const Provider = ({ children }: { children: React.ReactNode }) => (
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+  )
+  return Provider
+}
+
+const Provider = createWrapper()
+
 export const renderWithRouter = ({ route = '/' } = {}) => {
-  window.history.pushState({}, 'Test page', route)
+  window.history.pushState({}, 'test page', route)
   return {
     user: userEvent.setup(),
-    ...render(<App />, { wrapper: BrowserRouter })
+    ...render(
+      <Provider>
+        <App />
+      </Provider>,
+      { wrapper: BrowserRouter }
+    )
   }
 }
