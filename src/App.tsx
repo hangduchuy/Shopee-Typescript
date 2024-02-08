@@ -8,6 +8,14 @@ import { HelmetProvider } from 'react-helmet-async'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary.tsx'
 
+/**
+ * khi url thay đổi thì các component nào dùng các hook như
+ * useRoutes, useParams, useSearchParams,...
+ * sẽ bị re-render
+ * Ví dụ component 'App' dưới đây bị re-render khi mà url thay đổi
+ * vì dùng `useRouteElements` (đây là customHook của)
+ */
+
 function App() {
   const routeElements = useRouteElements()
   const { reset } = useContext(AppContext)
