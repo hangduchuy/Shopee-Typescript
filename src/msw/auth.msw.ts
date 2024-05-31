@@ -1,4 +1,4 @@
-import { http } from 'msw'
+import { rest } from 'msw'
 import HttpStatusCode from 'src/constants/httpStatusCode.enum'
 import config from 'src/constants/config'
 
@@ -41,11 +41,11 @@ const refreshTokenRes = {
   }
 }
 
-const loginRequest = http.post(`${config.baseUrl}login`, (req, res, ctx) => {
+const loginRequest = rest.post(`${config.baseUrl}login`, (_req, res, ctx) => {
   return res(ctx.status(HttpStatusCode.Ok), ctx.json(loginRes))
 })
 
-const refreshRequest = http.post(`${config.baseUrl}refresh-access-token`, (req, res, ctx) => {
+const refreshRequest = rest.post(`${config.baseUrl}refresh-access-token`, (_req, res, ctx) => {
   return res(ctx.status(HttpStatusCode.Ok), ctx.json(refreshTokenRes))
 })
 

@@ -1,4 +1,4 @@
-import { http } from 'msw'
+import { rest } from 'msw'
 import HttpStatusCode from 'src/constants/httpStatusCode.enum'
 import config from 'src/constants/config'
 import { access_token_1s } from './auth.msw'
@@ -19,9 +19,7 @@ const meRes = {
   }
 }
 
-console.log('config.baseUrl', config.baseUrl)
-
-const meRequest = http.get(`${config.baseUrl}me`, (req, res, ctx) => {
+const meRequest = rest.get(`${config.baseUrl}me`, (req, res, ctx) => {
   console.log('1123', 1123)
   console.log('req', req.headers.get('authorization'))
   const access_token = req.headers.get('authorization')
